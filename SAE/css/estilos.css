@@ -1,0 +1,23 @@
+body {
+    background-image: url('../assets/ITB1.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}
+.navbar-brand img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+.container {
+    margin-top: 100px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.sae{
+    width: 100px;
+    height: 35px;
+    margin-right: 10px;
+}
