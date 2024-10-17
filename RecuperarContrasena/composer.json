@@ -1,0 +1,12 @@
+{
+    "name": "sae/recuperar-contrasena",
+    "description": "Ejemplo Recuperar contraseña",
+    "autoload": {
+        "psr-4": {
+            "sae\\RecuperarContrasena\\": "src/"
+        }
+    },
+    "require": {
+        "phpmailer/phpmailer": "^6.9"
+    }
+}
