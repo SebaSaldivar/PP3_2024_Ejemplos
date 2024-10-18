@@ -1,0 +1,41 @@
+/* Tablas */
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    background-color: #fff;
+    font-size: 0.8rem;  /* Reducir aún más el tamaño de la fuente */
+    border-collapse: collapse; /* Eliminar la separación entre celdas */
+}
+
+.table th,
+.table td {
+    padding: 0.3rem;  /* Reducir el padding para que las celdas sean más compactas */
+    vertical-align: middle; /* Alinear verticalmente el contenido */
+    border: 1px solid #dee2e6; /* Mantener los bordes pero más finos */
+}
+
+.table thead th {
+    background-color: #007bff;
+    color: white;
+    padding: 0.3rem;  /* Ajustar el padding del encabezado */
+}
+
+.table tbody tr:hover {
+    background-color: #f1f3f5;
+}
+
+.table tbody td a.btn-info {
+    color: #fff;
+    font-size: 0.75rem;  /* Reducir el tamaño del texto del botón */
+    padding: 3px 7px;  /* Reducir el tamaño del botón */
+}
+
+.table tbody td {
+    text-align: center;  /* Centrar el contenido en las celdas */
+}
+
+/* Ajustar el tamaño de los botones */
+.btn {
+    padding: 5px 10px; /* Reducir tamaño general de los botones */
+    font-size: 0.75rem; /* Reducir el tamaño del texto de los botones */
+}
