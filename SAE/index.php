@@ -6,6 +6,10 @@ $sesion_iniciada = isset($_SESSION['usuario']);
 
 ?>
 
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -37,12 +41,6 @@ $sesion_iniciada = isset($_SESSION['usuario']);
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="registro/registro.php">Registro</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo $sesion_iniciada ? '' : 'disabled'; ?>" href="clases/gestion_clases.php" <?php echo $sesion_iniciada ? '' : 'tabindex="-1" aria-disabled="true"'; ?>>Gestión de Clases</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo $sesion_iniciada ? '' : 'disabled'; ?>" href="admin/gestion_profes.php" <?php echo $sesion_iniciada ? '' : 'tabindex="-1" aria-disabled="true"'; ?>>Gestión de Profesores</a>
                     </li>
                 </ul>
             </div>

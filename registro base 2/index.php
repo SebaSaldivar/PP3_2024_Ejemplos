@@ -27,21 +27,11 @@ if(isset($_POST['submit'])){
     // Capturar datos del formulario
     $name = mysqli_real_escape_string($conn, $_POST['nombre']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $pass = mysqli_real_escape_string($conn, md5($_POST['password']));
-    $rpass = mysqli_real_escape_string($conn, md5($_POST['rpassword']));
-
-    // Validar el archivo de imagen
-    if(isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
-        $image = $_FILES['imagen']['name'];
-        $image_size = $_FILES['imagen']['size'];
-        $image_tmp_name = $_FILES['imagen']['tmp_name'];
-        $image_folder = 'uploaded_img/'.$image;
-    } else {
-        $message[] = 'Error al subir la imagen o no se seleccionó ninguna imagen';
-    }
+    $pass = mysqli_real_escape_string($conn, $_POST['password']);
+    $rpass = mysqli_real_escape_string($conn, $_POST['rpassword']);
 
     // Verificar si el usuario ya existe
-    $select = mysqli_query($conn, "SELECT * FROM user_form WHERE email = '$email' AND password = '$pass'") or die('query failed');
+    $select = mysqli_query($conn, "SELECT * FROM user_form WHERE email = '$email'") or die('query failed');
 
     if(mysqli_num_rows($select) > 0){
         $message[] = 'Este usuario ya existe';
@@ -49,9 +39,26 @@ if(isset($_POST['submit'])){
         if($pass != $rpass){
             $message[] = 'Las contraseñas no coinciden';
         } else {
-            // Mover la imagen y registrar el usuario
-            move_uploaded_file($image_tmp_name, $image_folder);
-            $insert = mysqli_query($conn, "INSERT INTO user_form(nombre, email, password, imagen) VALUES('$name', '$email', '$pass', '$image')") or die('query failed');
+            // Hashear la contraseña
+            $hashed_pass = password_hash($pass, PASSWORD_DEFAULT);
+
+            // Verificar si se subió una imagen
+            if(isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+                $image = $_FILES['imagen']['name'];
+                $image_tmp_name = $_FILES['imagen']['tmp_name'];
+                $image_folder = 'uploaded_img/'.$image;
+
+                // Mover la imagen al directorio de destino
+                if(move_uploaded_file($image_tmp_name, $image_folder)) {
+                    // Insertar datos con la imagen
+                    $insert = mysqli_query($conn, "INSERT INTO user_form(nombre, email, password, imagen) VALUES('$name', '$email', '$hashed_pass', '$image')") or die('query failed');
+                } else {
+                    $message[] = 'Error al mover la imagen al directorio de destino';
+                }
+            } else {
+                // Insertar datos sin imagen
+                $insert = mysqli_query($conn, "INSERT INTO user_form(nombre, email, password) VALUES('$name', '$email', '$hashed_pass')") or die('query failed');
+            }
 
             if($insert){
                 $message[] = 'Usuario registrado con éxito';
@@ -61,6 +68,10 @@ if(isset($_POST['submit'])){
         }
     }
 }
+
+
+
+/* Manejo de errores al subir la imagen */
 
 /* if(isset($_FILES['imagen'])) {
     $errorCode = $_FILES['imagen']['error'];
